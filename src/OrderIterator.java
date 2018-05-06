@@ -4,7 +4,7 @@ import java.util.NoSuchElementException;
 
 public class OrderIterator implements Iterator<Order> {
 
-	
+	//Declaración de variables
 	Order currentOrder;
 	Enumeration<Order> enu;
 	

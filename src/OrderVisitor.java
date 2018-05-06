@@ -2,19 +2,15 @@ import java.util.Iterator;
 
 //clase que implementa los tipos de visitadores para cada tipo de orden
 public class OrderVisitor implements VisitorInterface{
-
-	//private HashMap<String, Double> orderObjList;
-	//private double orderTotal;
+	//Objeto con la colección de ordenes
 	private AllOrders allOrder;
 
 	public OrderVisitor() {
-		//orderObjList = new HashMap<String, Double>();
 		allOrder = new AllOrders();
 	}
 
 	public void visit(NonCaliforniaOrder inp_order) {
 		allOrder.addOrder(inp_order);
-		//orderTotal = orderTotal + inp_order.getOrderAmount();
 	}
 
 	public void visit(CaliforniaOrder inp_order) {
