@@ -9,6 +9,7 @@ public class AllOrders {
 	
 	//constructor para ejemplificar la clase 
 	  public AllOrders() {
+		  data = new Vector<>();
 	  }
 	  
 	  /**
