@@ -15,29 +15,10 @@ public class OrderVisitor implements VisitorInterface{
 
 	public void visit(CaliforniaOrder inp_order) {
 		allOrder.addOrder(inp_order);
-		//orderTotal = orderTotal + inp_order.getOrderAmount() + inp_order.getAdditionalTax();
 	}
 
 	public void visit(OverseasOrder inp_order) {
 		allOrder.addOrder(inp_order);
-		//orderTotal = orderTotal + inp_order.getOrderAmount() + inp_order.getAdditionalSH();
-	}
-
-	/**
-	 * Metodo para obtener total de todas las ordenes
-	 * @return
-	 */
-	public double getOrderTotal() {
-		
-		Iterator<OrderIterator> oI = allOrder.getOrderIterator();
-		Double total = 0.0;
-		
-		while (oI.hasNext()) {
-			Order o = (Order)oI.next();
-			total += o.getTotalAmount();
-		}
-		
-		return total;
 	}
 	
 }

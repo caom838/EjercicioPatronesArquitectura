@@ -24,6 +24,10 @@ public class TotalOrderVisitor implements VisitorInterface{
 		allOrder.addOrder(inp_order);
 	}
 
+	/**
+	 * Metodo para obtener total de todas las ordenes
+	 * @return
+	 */
 	public double getOrderTotal() {
 		Iterator<OrderIterator> oI = allOrder.getOrderIterator();
 		Double total = 0.0;
