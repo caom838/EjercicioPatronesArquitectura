@@ -50,8 +50,8 @@ public class CaliforniaUI extends UIBuilder {
 	@Override
 	public void initialize() {
 		
-		txtOrderAmount.setText("Ingresar cantidad");
-		txtAdditionalTax.setText("Igresar impuesto");
+		txtOrderAmount.setText("");
+		txtAdditionalTax.setText("");
 	}
 
 	@Override

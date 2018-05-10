@@ -8,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
 
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -42,15 +43,18 @@ public class OrderManager extends JFrame {
 
 	// atributos
 	private OrderVisitor objVisitor;
-	private TotalOrderVisitor objTotalVisitor;
+	private AllOrders allOrders;
 
 	// constructor
 	public OrderManager() throws HeadlessException {
 		super("Ejercicio de Patrones");
 
-		// 1. creamos una ejemplificación de visitador
-		objVisitor = new OrderVisitor();
-		objTotalVisitor = new TotalOrderVisitor();
+		//1 ejemplificamos la clase que contiene una colección de ordenes
+		allOrders = new AllOrders(); 
+		// 2. creamos una ejemplificación de visitador
+		objVisitor = new OrderVisitor(allOrders);
+
+		
 
 		// 2. creamos los objetos de GUI
 		// 2.1.1 creamos combobox para seleccionar los tipos de ordenes
@@ -157,10 +161,6 @@ public class OrderManager extends JFrame {
 		return objVisitor;
 	}
 
-	// Modificacion Jmoreno - se agrega get del visitador del total de la orden
-	public TotalOrderVisitor getTotalOrderVisitor() {
-		return objTotalVisitor;
-	}
 
 	public String getOrderType() {
 		return (String) cmbOrderType.getSelectedItem();
@@ -173,6 +173,12 @@ public class OrderManager extends JFrame {
 	public void setTotalValue(String msg) {
 		lblTotalValue.setText(msg);
 	}
+	//obtiene el objeto con la colección
+	public AllOrders getAllOrders()
+	{
+		return allOrders;
+	}
+	
 
 	// método main
 	public static void main(String[] args) {
@@ -208,7 +214,9 @@ class ButtonHandler implements ActionListener {
 	OrderManager objOrderManager;
 	// objeto de constructor de gui
 	UIBuilder builder;
-
+	//colección
+	AllOrders allOrder;
+	
 	// constructores
 	public ButtonHandler() {
 	}
@@ -228,7 +236,10 @@ class ButtonHandler implements ActionListener {
 		// valida si el evento es del boton crear orden
 		if (e.getActionCommand().equals(OrderManager.CREATE_ORDER)) {
 
+			//obtengo el tipo de orden seleccionado
 			String orderType = objOrderManager.getOrderType();
+			//obtengo la colección
+			allOrder = objOrderManager.getAllOrders();
 
 			// Validación que haya seleccionado un tipo de orden
 			if (orderType.equals("")) {
@@ -242,20 +253,26 @@ class ButtonHandler implements ActionListener {
 				// accept the visitor instance
 				order.accept(visitor);
 
-				// Modificaciones Jmoreno - Se acepta la ejemplificacion del
-				// visitador del total de la orden
-				TotalOrderVisitor visitorTotal = objOrderManager.getTotalOrderVisitor();
-				order.accept(visitorTotal);
-
 				totalResult = " Order Created Successfully";
 			}
 
 			objOrderManager.setTotalValue(totalResult);
 		}
 		if (e.getActionCommand().equals(OrderManager.GET_TOTAL)) {
-
-			// Modificación Jmoreno - Get the Visitor Total
-			TotalOrderVisitor visitorTotal = objOrderManager.getTotalOrderVisitor();
+			
+			//1. se obtiene la colección de ordenes
+			allOrder = objOrderManager.getAllOrders();
+			//2. se ejemplifica un visitador para totalizar
+			TotalOrderVisitor visitorTotal = new TotalOrderVisitor(allOrder);
+			//3. se obtiene todos los elementos de la colección y se itera
+			Iterator<OrderIterator> oI = allOrder.getOrderIterator();
+			Double total = 0.0;
+			//iteramos la coleccion visitando cada orden para obtener el valor total
+			while (oI.hasNext()) {
+				Order o = (Order)oI.next();
+				o.accept(visitorTotal);
+			}
+			//obtenemos el valor 
 			totalResult = new Double(visitorTotal.getOrderTotal()).toString();
 			totalResult = " Orders Total = " + totalResult;
 			objOrderManager.setTotalValue(totalResult);

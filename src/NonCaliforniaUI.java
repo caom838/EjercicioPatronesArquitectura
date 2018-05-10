@@ -40,7 +40,7 @@ formGUI = new JPanel();
 
 	@Override
 	public void initialize() {
-		txtOrderAmount.setText("Ingresar cantidad");
+		txtOrderAmount.setText("");
 	}
 	
 	@Override

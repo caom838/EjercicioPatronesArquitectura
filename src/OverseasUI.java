@@ -50,8 +50,8 @@ public class OverseasUI extends UIBuilder {
 
 	@Override
 	public void initialize() {
-		txtOrderAmount.setText("Ingresar cantidad");
-		txtAdditionalSH.setText("Igresar impuesto SH");
+		txtOrderAmount.setText("");
+		txtAdditionalSH.setText("");
 	}
 
 	@Override
